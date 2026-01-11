@@ -1,4 +1,6 @@
 use advent_of_code_2025::day2;
+use advent_of_code_2025::day3;
+use advent_of_code_2025::day3::get_input;
 use criterion::black_box;
 use criterion::criterion_group;
 use criterion::criterion_main;
@@ -25,5 +27,21 @@ fn bench_day2(c: &mut Criterion) {
     });
 }
 
+fn bench_day3(c: &mut Criterion) {
+    let banks = get_input();
+
+    c.bench_function("day3 p1", |b| {
+        b.iter(|| {
+            day3::run_challenge::<2>(black_box(&banks));
+        })
+    });
+
+    c.bench_function("day3 p2", |b| {
+        b.iter(|| {
+            day3::run_challenge::<12>(black_box(&banks));
+        })
+    });
+}
+
 criterion_main!(benches);
-criterion_group!(benches, bench_day2);
+criterion_group!(benches, bench_day2, bench_day3);
